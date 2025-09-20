@@ -1,3 +1,10 @@
+#' Export results of TCRsimilift
+#'
+#' @param new.data Dataframe produced by the TCRsimilift_calculate function.
+#' @param output_directory Name of output folder. "outputs" by default.
+#'
+#' @export
+#'
 export_outputs <- function(new.data, output_directory = "outputs") {
 
   #If output directory does not exist, create it
