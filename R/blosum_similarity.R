@@ -1,4 +1,13 @@
 blosum_similarity <- function(vj_data) {
+
+  #Check whether data is appropriate
+  if (!(nrow(vj_data) > 1)) {
+    stop("At least two sequences needed to calculate similarity.")
+  }
+  if (!(length(unique(vj_data$length)) == 1)) {
+    stop("All amino acid sequences must have same length to calculate similarity.")
+  }
+
   seq1 <- expand.grid(vj_data$cdr3_aa, vj_data$cdr3_aa)
   dist.m <- matrix(score(pairwiseAlignment(seq1$Var1, seq1$Var2,
                                            substitutionMatrix = "BLOSUM62",
