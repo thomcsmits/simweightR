@@ -1,4 +1,4 @@
-compute_dist_matrix <- function(data.1, z) {
+compute_dist_matrix <- function(data.1, z, sim_method) {
   cat("Processing mouse", z, "\n")
 
   # Parse V gene and J gene from seqid
@@ -19,7 +19,15 @@ compute_dist_matrix <- function(data.1, z) {
         if (nrow(vj_data) > 1) {
           cat("Processing sequences of length", seq_length, "for VJ group", vj_group, "\n")
           # Compute hamming distance within the VJ group
-          sim <- hamming_similarity(vj_data)
+          if (sim_method == "HAMMING") {
+            sim <- hamming_similarity(vj_data)
+          }
+          else if (sim_method == "BLOSUM") {
+            sim <- blosum_similarity(vj_data)
+          }
+          else {
+            stop("sim_method must be HAMMING or BLOSUM") #throw error if similarity method not valid
+          }
           vj_data$wrc <- update_read_counts(vj_data$consensus_count, sim)
         } else {
           vj_data$wrc <- vj_data$consensus_count
