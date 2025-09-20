@@ -19,12 +19,7 @@ compute_dist_matrix <- function(data.1, z) {
         if (nrow(vj_data) > 1) {
           cat("Processing sequences of length", seq_length, "for VJ group", vj_group, "\n")
           # Compute hamming distance within the VJ group
-          #START COMPUTING SIMILARITY
-          dist.m <- stringdistmatrix(vj_data$cdr3_aa, vj_data$cdr3_aa, method = "hamming")
-          rownames(dist.m) <- vj_data$cdr3_aa
-          dist.m <- dist.m / nchar(vj_data[1, ]$cdr3_aa)
-          sim <- 1 - dist.m
-          #STOP COMPUTING SIMILARITY
+          sim <- hamming_similarity(vj_data)
           vj_data$wrc <- update_read_counts(vj_data$consensus_count, sim)
         } else {
           vj_data$wrc <- vj_data$consensus_count
