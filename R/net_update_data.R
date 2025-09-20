@@ -1,5 +1,4 @@
 net_update_data <- function(data, sim_method="HAMMING") {
-  # sample_size=2 # REMOVE IN PKG
   new.data <- c()
   for(sample_id in unique(data$sample_processing_id)){
     data.1 <- data[data$sample_processing_id == sample_id,]

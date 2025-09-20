@@ -1,9 +1,4 @@
 compute_dist_matrix <- function(data.1, z, sim_method) {
-  cat("Processing mouse", z, "\n")
-
-  # Parse V gene and J gene from seqid
-  # data.1$v_gene <- gsub("_.*", "", data.1$seqid)    #get vgene jgene directly instead!
-  # data.1$j_gene <- gsub(".*_", "", data.1$seqid)
 
   min.l <- min(data.1$length)
   max.l <- max(data.1$length)
@@ -18,10 +13,11 @@ compute_dist_matrix <- function(data.1, z, sim_method) {
 
         if (nrow(vj_data) > 1) {
           cat("Processing sequences of length", seq_length, "for VJ group", vj_group, "\n")
-          # Compute hamming distance within the VJ group
+          # Compute hamming distance-based similarity within the VJ group
           if (sim_method == "HAMMING") {
             sim <- hamming_similarity(vj_data)
           }
+          # or BLOSUM-based
           else if (sim_method == "BLOSUM") {
             sim <- blosum_similarity(vj_data)
           }
