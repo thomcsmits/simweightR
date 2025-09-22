@@ -46,11 +46,11 @@ compute_dist_matrix <- function(data.1, sim_method, cutoff=0.8) {
         } else {
           vj_data$wrc <- vj_data$consensus_count
         }
-        data.new <- rbind(data.new, vj_data)
+        data.new <- base::rbind(data.new, vj_data)
       }
     } else {
       data.l$wrc <- data.l$consensus_count
-      data.new <- rbind(data.new, data.l)
+      data.new <- base::rbind(data.new, data.l)
     }
   }
   return(data.new)

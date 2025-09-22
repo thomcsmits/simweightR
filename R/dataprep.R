@@ -15,7 +15,7 @@ dataprep <- function(df) {
   df$length <- nchar(df$cdr3_aa) #calculating cdr3 aa length
 
   # aggregate counts across different measurements wihin same sample
-  data <- aggregate( consensus_count ~ sequence_id + sample_processing_id,
+  data <- stats::aggregate( consensus_count ~ sequence_id + sample_processing_id,
                      df, FUN=sum, drop=FALSE )
   data$consensus_count[is.na(data$consensus_count)] <- 0
 

@@ -19,7 +19,8 @@ blosum_similarity <- function(vj_data) {
   }
 
   seq1 <- expand.grid(vj_data$cdr3_aa, vj_data$cdr3_aa)
-  dist.m <- matrix(score(pairwiseAlignment(seq1$Var1, seq1$Var2,
+  dist.m <- matrix(BiocGenerics::score(Biostrings::pairwiseAlignment(
+                                           seq1$Var1, seq1$Var2,
                                            substitutionMatrix = "BLOSUM62",
                                            gapOpening = -2,
                                            gapExtension = -8,

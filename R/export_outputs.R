@@ -34,7 +34,7 @@ export_outputs <- function(new.data, output_directory = "outputs", csv_output = 
   result_matrix <- as.matrix(wide_df)
   result_matrix[is.na(result_matrix)] <- 0
 
-  write_rds(result_matrix, file=paste0(output_directory,
+  readr::write_rds(result_matrix, file=paste0(output_directory,
                                        "/matrix-unweighted.Rds"))
 
   ## Save weighted counts
@@ -54,7 +54,7 @@ export_outputs <- function(new.data, output_directory = "outputs", csv_output = 
   result_matrix <- as.matrix(wide_df)
   result_matrix[is.na(result_matrix)] <- 0
 
-  write_rds(result_matrix, file=paste0(output_directory,
+  readr::write_rds(result_matrix, file=paste0(output_directory,
                                        "/matrix-weighted-average.Rds"))
 
   ## Save csv file with full outputs of data processing

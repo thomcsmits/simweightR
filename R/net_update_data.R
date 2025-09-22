@@ -16,7 +16,7 @@ net_update_data <- function(data, sim_method="HAMMING", cutoff=0.8) {
   for(sample_id in unique(data$sample_processing_id)){
     data.1 <- data[data$sample_processing_id == sample_id,]
     new.data.1 <- compute_dist_matrix(data.1, sim_method = sim_method, cutoff=cutoff)
-    new.data <- rbind(new.data, new.data.1)
+    new.data <- base::rbind(new.data, new.data.1)
   }
   return(new.data)
 }
