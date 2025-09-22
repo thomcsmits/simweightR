@@ -1,14 +1,16 @@
 #' Export results of TCRsimilift
 #'
 #' Creates output directory if needed, and saves in it R datasets corresponding
-#' to the original and respectively to the adjusted counts.
+#' to the original and respectively to the adjusted counts. Additionally,
+#' it saves the full data, including adjusted counts, as a gzipped csv file.
 #'
 #' @param new.data Dataframe produced by the TCRsimilift_calculate function.
 #' @param output_directory Name of output folder. "outputs" by default.
+#' @param csv_output TRUE/FALSE. Do you want to export a gzipped csv of the full results? FALSE by default.
 #'
 #' @export
 #'
-export_outputs <- function(new.data, output_directory = "outputs") {
+export_outputs <- function(new.data, output_directory = "outputs", csv_output = FALSE) {
 
   #If output directory does not exist, create it
   if (!(dir.exists(output_directory))) {
@@ -56,6 +58,8 @@ export_outputs <- function(new.data, output_directory = "outputs") {
                                        "/matrix-weighted-average.Rds"))
 
   ## Save csv file with full outputs of data processing
-  write.csv(new.data,
-            gzfile(paste0(output_directory, "/update_data_TCRsimilift.csv.gz")))
+  if (csv_output) {
+    write.csv(new.data,
+              gzfile(paste0(output_directory, "/update_data_TCRsimilift.csv.gz")))
+  }
 }

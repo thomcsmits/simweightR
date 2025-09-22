@@ -4,14 +4,17 @@
 \alias{export_outputs}
 \title{Export results of TCRsimilift}
 \usage{
-export_outputs(new.data, output_directory = "outputs")
+export_outputs(new.data, output_directory = "outputs", csv_output = FALSE)
 }
 \arguments{
 \item{new.data}{Dataframe produced by the TCRsimilift_calculate function.}
 
 \item{output_directory}{Name of output folder. "outputs" by default.}
+
+\item{csv_output}{TRUE/FALSE. Do you want to export a gzipped csv of the full results?}
 }
 \description{
 Creates output directory if needed, and saves in it R datasets corresponding
-to the original and respectively to the adjusted counts.
+to the original and respectively to the adjusted counts. Additionally,
+it saves the full data, including adjusted counts, as a gzipped csv file.
 }

@@ -10,6 +10,8 @@
 #' @param export_results Boolean, whether to automatically run the export_results function.
 #' @param output_directory Name of output directory.
 #' @param cutoff Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .
+#' @inheritParams export_outputs
+#'
 #'
 #' @returns Returns dataframe with extra column of adjusted counts based on similarity.
 #' @export
@@ -19,15 +21,16 @@
 #'
 TCRsimilift_calculate <- function(df,
                                   sim_method="HAMMING",
+                                  cutoff = 0.8,
                                   export_results=FALSE,
                                   output_directory = "outputs",
-                                  cutoff = 0.8) {
+                                  csv_output = FALSE) {
 
   datacheck(df)
   df2 <- dataprep(df)
   new.data <- net_update_data(df2, sim_method = sim_method, cutoff=cutoff)
   if (export_results) {
-    export_outputs(new.data, output_directory = "outputs")
+    export_outputs(new.data, output_directory = output_directory, csv_output = csv_output)
   }
   return(new.data)
 }
