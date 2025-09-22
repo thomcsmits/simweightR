@@ -1,3 +1,10 @@
+#' Calculate similarity matrix for input sequences based on BLOSUM distance
+#'
+#' @param vj_data Data subset containing all sequences with same length, same V and J calls.
+#'
+#' @returns Similarity score matrix.
+#' @export
+#'
 blosum_similarity <- function(vj_data) {
 
   #Check whether data is appropriate

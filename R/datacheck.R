@@ -1,3 +1,9 @@
+#' Check if dataset has all necessary columns
+#'
+#' @param df Dataframe of immunological data.
+#'
+#' @export
+#'
 datacheck <- function(df) {
 
   print("Checking dataset...")

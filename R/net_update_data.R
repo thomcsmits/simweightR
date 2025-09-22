@@ -1,3 +1,11 @@
+#' Call compute_dist_matrix for each sample.
+#'
+#' @param data Dataframe of AIRR format immunological data.
+#' @param sim_method HAMMING or BLOSUM.
+#'
+#' @returns Returns dataframe with adjusted counts.
+#' @export
+#'
 net_update_data <- function(data, sim_method="HAMMING") {
   new.data <- c()
   for(sample_id in unique(data$sample_processing_id)){

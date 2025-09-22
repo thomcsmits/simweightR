@@ -1,3 +1,11 @@
+#' Update read counts based on similarity
+#'
+#' @param read_counts A dataframe with read counts for each sequence ID
+#' @param similarity_matrix A matrix of similarity scores for each sequence ID
+#'
+#' @returns A dataframe.
+#' @export
+#'
 update_read_counts <- function(read_counts, similarity_matrix) {
   updated_read_counts <- read_counts
   for (i in 1:length(read_counts)) {

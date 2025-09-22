@@ -1,3 +1,12 @@
+#' Add column of adjusted counts based on similarity
+#'
+#' @param data.1 Dataframe with counts, AIRR format.
+#' @param z Sample size, ancillary.
+#' @param sim_method Similarity method, either HAMMING or BLOSUM.
+#'
+#' @returns data.1 with added column wrc of adjusted counts.
+#' @export
+#'
 compute_dist_matrix <- function(data.1, z, sim_method) {
 
   min.l <- min(data.1$length)
