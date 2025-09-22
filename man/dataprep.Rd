@@ -13,5 +13,11 @@ dataprep(df)
 A dataframe
 }
 \description{
-Data preparation for TCRsimilift
+Preprocessing the data for downstream use involves:
+\itemize{
+\item adds a column for cdr3 amino acid sequence lengths
+\item aggregates all counts for each sequence id and each sample.
+\item replaces NAs with 0.
+\item returns aggregate data with only necessary associated columns.
+}
 }

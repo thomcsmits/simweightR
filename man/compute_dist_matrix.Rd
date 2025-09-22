@@ -17,5 +17,7 @@ compute_dist_matrix(data.1, z, sim_method)
 data.1 with added column wrc of adjusted counts.
 }
 \description{
-Add column of adjusted counts based on similarity
+For cdr3 amino acid length in the sample, and for each existing VJ combination,
+a similarity score matrix is calculated for the respective cdr3s. This similarity
+matrix is used to generate updated counts via the update_read_counts() function.
 }

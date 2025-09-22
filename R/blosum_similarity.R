@@ -1,5 +1,8 @@
 #' Calculate similarity matrix for input sequences based on BLOSUM distance
 #'
+#' Calculates BLOSUM62-based distance matrix for the given sequences, which is then
+#' employed to generate a similarity matrix, which is returned.
+#'
 #' @param vj_data Data subset containing all sequences with same length, same V and J calls.
 #'
 #' @returns Similarity score matrix.

@@ -2,11 +2,7 @@
 % Please edit documentation in R/TCRsimilift_calculate.R
 \name{TCRsimilift_calculate}
 \alias{TCRsimilift_calculate}
-\title{Use TCRsimilift
-Convenience function to do all TCRsimilift data preprocessing in one call.
-The function checks the data to ensure format, prepares the data for processing,
-runs net_update_data to return an updated dataframe with similarity-altered
-counts, and offers the option to export results as .Rds and .csv files.}
+\title{Use TCRsimilift}
 \usage{
 TCRsimilift_calculate(
   df,
@@ -25,12 +21,15 @@ TCRsimilift_calculate(
 \item{output_directory}{Name of output directory.}
 }
 \value{
-Dataframe with extra column of adjusted counts based on similarity.
+Returns dataframe with extra column of adjusted counts based on similarity.
 }
 \description{
-Use TCRsimilift
-Convenience function to do all TCRsimilift data preprocessing in one call.
+Convenience function to do all TCRsimilift data processing in one call.
 The function checks the data to ensure format, prepares the data for processing,
 runs net_update_data to return an updated dataframe with similarity-altered
 counts, and offers the option to export results as .Rds and .csv files.
+}
+\examples{
+results <- TCRsimilift_calculate(my_dataframe, sim_method="BLOSUM", export_results=TRUE, output_directory="my_outputs")
+
 }

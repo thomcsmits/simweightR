@@ -13,5 +13,6 @@ blosum_similarity(vj_data)
 Similarity score matrix.
 }
 \description{
-Calculate similarity matrix for input sequences based on BLOSUM distance
+Calculates BLOSUM62-based distance matrix for the given sequences, which is then
+employed to generate a similarity matrix, which is returned.
 }

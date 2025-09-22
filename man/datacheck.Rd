@@ -10,5 +10,6 @@ datacheck(df)
 \item{df}{Dataframe of immunological data.}
 }
 \description{
-Check if dataset has all necessary columns
+This internal function of the package verifies that the input dataframe contains the
+needed AIRR columns. It does not verify their contents, only their existence.
 }

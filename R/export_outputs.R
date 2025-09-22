@@ -1,5 +1,8 @@
 #' Export results of TCRsimilift
 #'
+#' Creates output directory if needed, and saves in it R datasets corresponding
+#' to the original and respectively to the adjusted counts.
+#'
 #' @param new.data Dataframe produced by the TCRsimilift_calculate function.
 #' @param output_directory Name of output folder. "outputs" by default.
 #'

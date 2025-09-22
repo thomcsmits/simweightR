@@ -1,5 +1,9 @@
 #' Add column of adjusted counts based on similarity
 #'
+#' For cdr3 amino acid length in the sample, and for each existing VJ combination,
+#' a similarity score matrix is calculated for the respective cdr3s. This similarity
+#' matrix is used to generate updated counts via the update_read_counts() function.
+#'
 #' @param data.1 Dataframe with counts, AIRR format.
 #' @param z Sample size, ancillary.
 #' @param sim_method Similarity method, either HAMMING or BLOSUM.

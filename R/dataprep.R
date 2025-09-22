@@ -1,5 +1,11 @@
 #' Data preparation for TCRsimilift
 #'
+#' Preprocessing the data for downstream use involves:
+#' * adds a column for cdr3 amino acid sequence lengths
+#' * aggregates all counts for each sequence id and each sample.
+#' * replaces NAs with 0.
+#' * returns aggregate data with only necessary associated columns.
+#'
 #' @param df AIRR formatted dataframe of immunological data.
 #'
 #' @returns A dataframe

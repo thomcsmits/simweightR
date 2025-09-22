@@ -15,5 +15,8 @@ net_update_data(data, sim_method = "HAMMING")
 Returns dataframe with adjusted counts.
 }
 \description{
-Call compute_dist_matrix for each sample.
+Creates a new.data empty dataframe. Then, for each sample, it updates the rows
+of the input dataframe with adjusted counts, and appends them to new.data .
+In the end, new.data is returned, consisting of all original input rows, but
+with an added wrc column for similarity-based adjusted counts.
 }
