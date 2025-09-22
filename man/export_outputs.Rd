@@ -11,7 +11,7 @@ export_outputs(new.data, output_directory = "outputs", csv_output = FALSE)
 
 \item{output_directory}{Name of output folder. "outputs" by default.}
 
-\item{csv_output}{TRUE/FALSE. Do you want to export a gzipped csv of the full results?}
+\item{csv_output}{TRUE/FALSE. Do you want to export a gzipped csv of the full results? FALSE by default.}
 }
 \description{
 Creates output directory if needed, and saves in it R datasets corresponding

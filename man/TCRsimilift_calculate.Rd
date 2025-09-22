@@ -24,7 +24,7 @@ TCRsimilift_calculate(
 
 \item{output_directory}{Name of output directory.}
 
-\item{csv_output}{TRUE/FALSE. Do you want to export a gzipped csv of the full results?}
+\item{csv_output}{TRUE/FALSE. Do you want to export a gzipped csv of the full results? FALSE by default.}
 }
 \value{
 Returns dataframe with extra column of adjusted counts based on similarity.
