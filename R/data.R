@@ -1,0 +1,22 @@
+#' Mouse TCR sequencing data
+#'
+#' A subset of mouse TCR sequencing data from two treatment groups: control (PBS) vs
+#' injected with sheep cells to induce immune response (TCZ). The data
+#' is formatted according to AIRR standards.
+#'
+#'
+#' @format ## `mouse_PBSvTCZ_data`
+#' A data frame with 22,000 rows and 9 columns:
+#' \describe{
+#'   \item{cdr3_aa}{Amino acid translation of the cdr3 field.}
+#'   \item{consensus_count}{Number of reads contributing to the UMI consensus or contig assembly for this sequence. For example, the sum of the number of reads for all UMIs that contribute to the query sequence.}
+#'   \item{cdr3}{Nucleotide sequence of the aligned CDR3 region}
+#'   \item{v_call}{V gene with allele. If referring to a known reference sequence in a database the relevant gene/allele nomenclature should be followed (e.g., IGHV4-59*01 if using IMGT/GENE-DB).}
+#'   \item{j_call}{J gene with allele. If referring to a known reference sequence in a database the relevant gene/allele nomenclature should be followed (e.g., IGHJ4*02 if using IMGT/GENE-DB).}
+#'   \item{d_call}{First or only D gene with allele. If referring to a known reference sequence in a database the relevant gene/allele nomenclature should be followed (e.g., IGHD3-10*01 if using IMGT/GENE-DB).}
+#'   \item{treatment}{PBS (control) or TCZ (infected)}
+#'   \item{sample_processing_id}{Identifier to the sample processing object in the repertoire metadata }
+#'   \item{sequence_id}{Unique query sequence identifier}
+#' }
+#' @source <https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1>
+"mouse_PBSvTCZ_data"
