@@ -16,8 +16,30 @@ library(TCRsimilift)
 ```
 
 ## Usage
+
+The easiest way to use the package is by running the `TCRsimilift_calculate()` function on a dataframe containing TCR sequencing data, where the column namings respect the [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). This function will output a dataframe containing aggregated counts, with an additional column `wrc` that contains the adjusted counts based on similarity scores. Please see the help file of the `TCRsimilift_calculate()` for details about all relevant parameters and their defaults.
+
+Here is an example of running this function on the example dataset provided with the package:
+
 ```
 results <- TCRsimilift_calculate(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
+```
+
+### Alternatively: running the functions in the pipeline separately
+
+It is also possible to run the functions of this pipeline manually to see the outputs created along the way. These are as follows:
+ 
+* `datacheck()` : will throw an error if the data is formatted incorrectly. 
+* `dataprep()` : creates a dataframe with the appropriate columns and contents to process downstream.
+* `net_update_data()` : adjust counts based on similarity, sample by sample, and return results.
+
+If a different method for count adjustment is desired than the weighted average we use, it is also possible to call the functions that output the similarity matrices directly via `blosum_similarity()` or `hamming_similarity()`. See respective help files for details. Bear in mind that all cdr3 amino acid sequences fed to these two functions must have the same length in order to be valid inputs.
+
+In the package code, the similarity is calculated for all TCRs with the same CDR3 amino acid sequence length separately, via a loop like so:
+```
+for (seq_length in all_sequence_lengths) {
+  # calculate similarity matrices and adjust counts
+}
 ```
 
 ## Authors and acknowledgment
