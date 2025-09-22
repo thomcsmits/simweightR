@@ -5,12 +5,12 @@
 #' matrix is used to generate updated counts via the update_read_counts() function.
 #'
 #' @param data.1 Dataframe with counts, AIRR format.
-#' @param sim_method Similarity method, either HAMMING or BLOSUM.
+#' @inheritParams TCRsimilift_calculate
 #'
 #' @returns data.1 with added column wrc of adjusted counts.
 #' @export
 #'
-compute_dist_matrix <- function(data.1, sim_method) {
+compute_dist_matrix <- function(data.1, sim_method, cutoff=0.8) {
 
   #Find interval of relevant cdr3 amino acid chain lengths
   min.l <- min(data.1$length)
@@ -40,7 +40,9 @@ compute_dist_matrix <- function(data.1, sim_method) {
             stop("sim_method must be HAMMING or BLOSUM") #throw error if similarity method not valid
           }
           # add new column to dataframe, containing similarity adjusted counts
-          vj_data$wrc <- update_read_counts(vj_data$consensus_count, sim)
+          vj_data$wrc <- update_read_counts(read_counts = vj_data$consensus_count,
+                                            similarity_matrix = sim,
+                                            cutoff = cutoff)
         } else {
           vj_data$wrc <- vj_data$consensus_count
         }

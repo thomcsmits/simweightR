@@ -6,16 +6,16 @@
 #' with an added wrc column for similarity-based adjusted counts.
 #'
 #' @param data Dataframe of AIRR format immunological data.
-#' @param sim_method HAMMING or BLOSUM.
+#' @inheritParams TCRsimilift_calculate
 #'
 #' @returns Returns dataframe with adjusted counts.
 #' @export
 #'
-net_update_data <- function(data, sim_method="HAMMING") {
+net_update_data <- function(data, sim_method="HAMMING", cutoff=0.8) {
   new.data <- c()
   for(sample_id in unique(data$sample_processing_id)){
     data.1 <- data[data$sample_processing_id == sample_id,]
-    new.data.1 <- compute_dist_matrix(data.1, sim_method = sim_method)
+    new.data.1 <- compute_dist_matrix(data.1, sim_method = sim_method, cutoff=cutoff)
     new.data <- rbind(new.data, new.data.1)
   }
   return(new.data)

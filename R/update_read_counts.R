@@ -5,14 +5,15 @@
 #'
 #' @param read_counts A dataframe with read counts for each sequence ID
 #' @param similarity_matrix A matrix of similarity scores for each sequence ID pair
+#' @inheritParams TCRsimilift_calculate
 #'
 #' @returns A dataframe.
 #' @export
 #'
-update_read_counts <- function(read_counts, similarity_matrix) {
+update_read_counts <- function(read_counts, similarity_matrix, cutoff=0.8) {
   updated_read_counts <- read_counts
   for (i in 1:length(read_counts)) {
-    similar_indices <- which(similarity_matrix[i, ] >= 0.8 ) #HARD-CODED VALUE!
+    similar_indices <- which(similarity_matrix[i, ] >= cutoff )
     weighted_sum <- 0
     total_weight <- 0
 

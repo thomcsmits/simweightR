@@ -8,7 +8,8 @@ TCRsimilift_calculate(
   df,
   sim_method = "HAMMING",
   export_results = FALSE,
-  output_directory = "outputs"
+  output_directory = "outputs",
+  cutoff = 0.8
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ TCRsimilift_calculate(
 \item{export_results}{Boolean, whether to automatically run the export_results function.}
 
 \item{output_directory}{Name of output directory.}
+
+\item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }
 \value{
 Returns dataframe with extra column of adjusted counts based on similarity.

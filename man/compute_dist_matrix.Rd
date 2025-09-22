@@ -4,14 +4,14 @@
 \alias{compute_dist_matrix}
 \title{Add column of adjusted counts based on similarity}
 \usage{
-compute_dist_matrix(data.1, z, sim_method)
+compute_dist_matrix(data.1, sim_method, cutoff = 0.8)
 }
 \arguments{
 \item{data.1}{Dataframe with counts, AIRR format.}
 
-\item{z}{Sample size, ancillary.}
+\item{sim_method}{Either HAMMING or BLOSUM.}
 
-\item{sim_method}{Similarity method, either HAMMING or BLOSUM.}
+\item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }
 \value{
 data.1 with added column wrc of adjusted counts.

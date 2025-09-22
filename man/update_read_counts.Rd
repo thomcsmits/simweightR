@@ -4,12 +4,14 @@
 \alias{update_read_counts}
 \title{Update read counts based on similarity}
 \usage{
-update_read_counts(read_counts, similarity_matrix)
+update_read_counts(read_counts, similarity_matrix, cutoff = 0.8)
 }
 \arguments{
 \item{read_counts}{A dataframe with read counts for each sequence ID}
 
 \item{similarity_matrix}{A matrix of similarity scores for each sequence ID pair}
+
+\item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }
 \value{
 A dataframe.

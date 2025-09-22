@@ -4,12 +4,14 @@
 \alias{net_update_data}
 \title{Call compute_dist_matrix for each sample.}
 \usage{
-net_update_data(data, sim_method = "HAMMING")
+net_update_data(data, sim_method = "HAMMING", cutoff = 0.8)
 }
 \arguments{
 \item{data}{Dataframe of AIRR format immunological data.}
 
-\item{sim_method}{HAMMING or BLOSUM.}
+\item{sim_method}{Either HAMMING or BLOSUM.}
+
+\item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }
 \value{
 Returns dataframe with adjusted counts.
