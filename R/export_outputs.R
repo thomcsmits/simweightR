@@ -56,6 +56,6 @@ export_outputs <- function(new.data, output_directory = "outputs") {
                                        "/matrix-weighted-average.Rds"))
 
   ## Save csv file with full outputs of data processing
-  # write.csv(new.data,
-  # gzfile(paste0("data/updated-data-rc1-", sample_size, ".csv.gz")))
+  write.csv(new.data,
+            gzfile(paste0(output_directory, "/update_data_TCRsimilift.csv.gz")))
 }
