@@ -7,8 +7,6 @@
 #'
 blosum_similarity <- function(vj_data) {
 
-  #random meaningless comment!!!!
-
   #Check whether data is appropriate
   if (!(nrow(vj_data) > 1)) {
     stop("At least two sequences needed to calculate similarity.")
