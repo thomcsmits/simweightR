@@ -12,5 +12,6 @@ export_outputs(new.data, output_directory = "outputs")
 \item{output_directory}{Name of output folder. "outputs" by default.}
 }
 \description{
-Export results of TCRsimilift
+Creates output directory if needed, and saves in it R datasets corresponding
+to the original and respectively to the adjusted counts.
 }

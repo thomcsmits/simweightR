@@ -1,5 +1,6 @@
 #' Use TCRsimilift
-#' Convenience function to do all TCRsimilift data preprocessing in one call.
+#'
+#' Convenience function to do all TCRsimilift data processing in one call.
 #' The function checks the data to ensure format, prepares the data for processing,
 #' runs net_update_data to return an updated dataframe with similarity-altered
 #' counts, and offers the option to export results as .Rds and .csv files.
@@ -9,8 +10,11 @@
 #' @param export_results Boolean, whether to automatically run the export_results function.
 #' @param output_directory Name of output directory.
 #'
-#' @returns Dataframe with extra column of adjusted counts based on similarity.
+#' @returns Returns dataframe with extra column of adjusted counts based on similarity.
 #' @export
+#'
+#' @examples
+#' results <- TCRsimilift_calculate(my_dataframe, sim_method="BLOSUM", export_results=TRUE, output_directory="my_outputs")
 #'
 TCRsimilift_calculate <- function(df,
                                   sim_method="HAMMING",

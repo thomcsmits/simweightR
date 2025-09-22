@@ -1,5 +1,8 @@
 #' Export results of TCRsimilift
 #'
+#' Creates output directory if needed, and saves in it R datasets corresponding
+#' to the original and respectively to the adjusted counts.
+#'
 #' @param new.data Dataframe produced by the TCRsimilift_calculate function.
 #' @param output_directory Name of output folder. "outputs" by default.
 #'
@@ -29,12 +32,8 @@ export_outputs <- function(new.data, output_directory = "outputs") {
   result_matrix <- as.matrix(wide_df)
   result_matrix[is.na(result_matrix)] <- 0
 
-  sample_size = 2
-
   write_rds(result_matrix, file=paste0(output_directory,
-                                       "/matrix-unweighted-",
-                                       sample_size,
-                                       ".Rds"))
+                                       "/matrix-unweighted.Rds"))
 
   ## Save weighted counts
   new.rc <- new.data[,c("sequence_id", "wrc", "sample_processing_id")]
@@ -54,7 +53,9 @@ export_outputs <- function(new.data, output_directory = "outputs") {
   result_matrix[is.na(result_matrix)] <- 0
 
   write_rds(result_matrix, file=paste0(output_directory,
-                                       "/matrix-weighted-average-",
-                                       sample_size,
-                                       ".Rds"))
+                                       "/matrix-weighted-average.Rds"))
+
+  ## Save csv file with full outputs of data processing
+  # write.csv(new.data,
+  # gzfile(paste0("data/updated-data-rc1-", sample_size, ".csv.gz")))
 }

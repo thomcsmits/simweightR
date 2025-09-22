@@ -1,7 +1,10 @@
 #' Update read counts based on similarity
 #'
+#' Given the input read counts and similarity matrix for them, updated counts are
+#' generated based on the weighted-sum rule.
+#'
 #' @param read_counts A dataframe with read counts for each sequence ID
-#' @param similarity_matrix A matrix of similarity scores for each sequence ID
+#' @param similarity_matrix A matrix of similarity scores for each sequence ID pair
 #'
 #' @returns A dataframe.
 #' @export

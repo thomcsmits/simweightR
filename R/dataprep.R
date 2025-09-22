@@ -1,5 +1,11 @@
 #' Data preparation for TCRsimilift
 #'
+#' Preprocessing the data for downstream use involves:
+#' * adds a column for cdr3 amino acid sequence lengths
+#' * aggregates all counts for each sequence id and each sample.
+#' * replaces NAs with 0.
+#' * returns aggregate data with only necessary associated columns.
+#'
 #' @param df AIRR formatted dataframe of immunological data.
 #'
 #' @returns A dataframe
@@ -8,10 +14,10 @@
 dataprep <- function(df) {
   df$length <- nchar(df$cdr3_aa) #calculating cdr3 aa length
 
+  # aggregate counts across different measurements wihin same sample
   data <- aggregate( consensus_count ~ sequence_id + sample_processing_id,
                      df, FUN=sum, drop=FALSE )
   data$consensus_count[is.na(data$consensus_count)] <- 0
-  # data$treatment <- ifelse(grepl("PBS", data$sample_processing_id), "nt", "t") #REMOVE IN PKG
 
   uniqueIDVJ <- unique(df[c("sequence_id",
                             "length",
