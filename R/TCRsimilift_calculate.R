@@ -19,6 +19,41 @@
 #' @examples
 #' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset, sim_method="HAMMING", cutoff = 0.77, export_results=FALSE)
 #'
+#'#'@examples
+#'\dontrun{
+#' # This is an example of DGE incorporating our data preprocessing.
+#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data)
+#' count_matrix <- TCRsimilift_make_weighted_counts(results, doFilter = TRUE)
+#' # Differential gene expression analysis using Wilcoxon test.
+#' # The functions DGEList(), calcNormFactors() and cpm() need the library edgeR.
+#' class(count_matrix) <- "numeric"
+#' sample_size <- 2
+#' condition <- factor(c( rep("treatment", sample_size), rep("non-treatment", sample_size)))
+#' y <- edgeR::DGEList( counts=count_matrix, group=condition )
+#' y <- edgeR::calcNormFactors(y,method="TMM")
+#' count_norm=edgeR::cpm(y)
+#' count_norm<-as.data.frame(count_norm)
+#' pvalues <- sapply(1:nrow(count_norm),function(i){
+#'   data<-cbind.data.frame(gene=as.numeric(t(count_norm[i,])),condition)
+#'   p=wilcox.test(gene~condition, data)$p.value
+#'   return(p)
+#'   })
+#' pvalues <- data.frame(pvalues)
+#' rownames(pvalues) <- rownames(count_norm)
+#' pvalues$fdr=p.adjust(pvalues$pvalues,method = "fdr")
+#' conditionsLevel<-levels(condition)
+#' dataCon1=count_norm[,c(which(condition==conditionsLevel[1]))]
+#' dataCon2=count_norm[,c(which(condition==conditionsLevel[2]))]
+#' dataCon2 <- dataCon2[rownames(dataCon1), ]
+#' pvalues <- pvalues[rownames(dataCon1), ]
+#' foldChanges=log2((rowMeans(dataCon2) + 1) / (rowMeans(dataCon1) + 1))
+#' outRst<-data.frame(log2foldChange=foldChanges, pValues=pvalues$pvalues, FDR=pvalues$fdr)
+#' rownames(outRst)=rownames(count_norm)
+#' outRst=na.omit(outRst)
+#' fdrThres=1
+#' tbl <- outRst[outRst$FDR<=fdrThres,]
+#'}
+#'
 TCRsimilift_calculate <- function(df,
                                   sim_method="HAMMING",
                                   cutoff = 0.8,
