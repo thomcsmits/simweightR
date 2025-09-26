@@ -9,7 +9,14 @@
 What the package does (one paragraph).
 }
 \author{
-\strong{Maintainer}: Radu Diaconescu \email{r.diaconescu@stud.uni-goettingen.de}
+\strong{Maintainer}: Johannes Textor \email{johannes.textor@ru.nl}
+
+Authors:
+\itemize{
+  \item Radu Diaconescu \email{r.diaconescu@stud.uni-goettingen.de}
+  \item Franka Buytenhuijs
+  \item Ankur Ankan
+}
 
 }
 \keyword{internal}
