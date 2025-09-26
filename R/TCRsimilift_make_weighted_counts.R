@@ -1,3 +1,11 @@
+#' Make count matrix from outputs of TCRsimilift_calculate
+#'
+#' @param new.data A dataframe outputted by \link{TCRsimilift_calculate}
+#' @param doFilter Filter out sequences that do not have at least 2 counts? TRUE/FALSE.
+#'
+#' @returns Count matrix containing weighted counts for each sequence and sample.
+#' @export
+#'
 TCRsimilift_make_weighted_counts <- function(new.data, doFilter=FALSE) {
   if (doFilter == TRUE) { #if filtering, we need to process unweighted data too
     ## Save unweighted counts

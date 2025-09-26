@@ -4,12 +4,12 @@
 \name{TCRsimilift-package}
 \alias{TCRsimilift}
 \alias{TCRsimilift-package}
-\title{TCRsimilift: What the Package Does (One Line, Title Case)}
+\title{TCRsimilift: TCR sequencing data preprocessing via similarity-based count adjustment}
 \description{
 What the package does (one paragraph).
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com}
+\strong{Maintainer}: Radu Diaconescu \email{r.diaconescu@stud.uni-goettingen.de}
 
 }
 \keyword{internal}
