@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
+#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset, sim_method="HAMMING", cutoff = 0.77, export_results=FALSE)
 #'
 TCRsimilift_calculate <- function(df,
                                   sim_method="HAMMING",
