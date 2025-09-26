@@ -15,5 +15,20 @@ TCRsimilift_make_weighted_counts(new.data, doFilter = FALSE)
 Count matrix containing weighted counts for each sequence and sample.
 }
 \description{
-Make count matrix from outputs of TCRsimilift_calculate
+This function takes a dataframe which is output by TCRsimilift_calculate,
+which may contain many columns besides the information about counts,
+sequence IDs and samples. It then outputs a counts matrix, where each row
+refers to a sequence, each columns is a sample, and the values therein are
+counts. Such a count matrix can then be passed on into conventional
+DGE workflows such as edgeR and deseq2, as well as other methods
+for analyzing DGE such as the Wilcoxon test.
+}
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}
+\examples{
+results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset)
+count_matrix <- TCRsimilift_make_weighted_counts(results)
+
+
 }

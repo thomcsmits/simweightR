@@ -4,11 +4,12 @@
 #' a similarity score matrix is calculated for the respective cdr3s. This similarity
 #' matrix is used to generate updated counts via the update_read_counts() function.
 #'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param data.1 Dataframe with counts, AIRR format.
 #' @inheritParams TCRsimilift_calculate
 #'
 #' @returns data.1 with added column wrc of adjusted counts.
-#' @export
 #'
 compute_dist_matrix <- function(data.1, sim_method, cutoff=0.8) {
 

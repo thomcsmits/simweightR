@@ -4,6 +4,8 @@
 #' to the original and respectively to the adjusted counts. Additionally,
 #' it saves the full data, including adjusted counts, as a gzipped csv file.
 #'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param new.data Dataframe produced by the TCRsimilift_calculate function.
 #' @param output_directory Name of output folder. "outputs" by default.
 #' @param csv_output TRUE/FALSE. Do you want to export a gzipped csv of the full results? FALSE by default.

@@ -22,3 +22,6 @@ of the input dataframe with adjusted counts, and appends them to new.data .
 In the end, new.data is returned, consisting of all original input rows, but
 with an added wrc column for similarity-based adjusted counts.
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

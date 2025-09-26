@@ -13,3 +13,9 @@ datacheck(df)
 This internal function of the package verifies that the input dataframe contains the
 needed AIRR columns. It does not verify their contents, only their existence.
 }
+\details{
+The function will only have outputs if there are any errors or warnings, otherwise
+the dataset is considered OK.
+
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

@@ -13,5 +13,5 @@ hamming_similarity(vj_data)
 Similarity score matrix.
 }
 \description{
-Calculate similarity matrix for input sequences based on Hamming distance
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
 }

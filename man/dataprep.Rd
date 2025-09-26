@@ -21,3 +21,6 @@ Preprocessing the data for downstream use involves:
 \item returns aggregate data with only necessary associated columns.
 }
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

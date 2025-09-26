@@ -1,9 +1,10 @@
 #' Calculate similarity matrix for input sequences based on Hamming distance
 #'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param vj_data Data subset containing all sequences with same length, same V and J calls.
 #'
 #' @returns Similarity score matrix.
-#' @export
 #'
 hamming_similarity <- function(vj_data) {
 

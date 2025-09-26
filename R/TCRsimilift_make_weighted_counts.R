@@ -1,11 +1,29 @@
 #' Make count matrix from outputs of TCRsimilift_calculate
 #'
+#' This function takes a dataframe which is output by TCRsimilift_calculate,
+#' which may contain many columns besides the information about counts,
+#' sequence IDs and samples. It then outputs a counts matrix, where each row
+#' refers to a sequence, each columns is a sample, and the values therein are
+#' counts. Such a count matrix can then be passed on into conventional
+#' DGE workflows such as edgeR and deseq2, as well as other methods
+#' for analyzing DGE such as the Wilcoxon test.
+#'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param new.data A dataframe outputted by \link{TCRsimilift_calculate}
 #' @param doFilter Filter out sequences that do not have at least 2 counts? TRUE/FALSE.
 #'
 #' @returns Count matrix containing weighted counts for each sequence and sample.
 #' @export
 #'
+#' @examples
+#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset)
+#' count_matrix <- TCRsimilift_make_weighted_counts(results)
+#'
+#'
+
+
+
 TCRsimilift_make_weighted_counts <- function(new.data, doFilter=FALSE) {
   if (doFilter == TRUE) { #if filtering, we need to process unweighted data too
     ## Save unweighted counts
@@ -36,7 +54,7 @@ TCRsimilift_make_weighted_counts <- function(new.data, doFilter=FALSE) {
   rownames(wide_df) <- wide_df$sequence_id
   wide_df <- wide_df[, -1]
   # Set the column names
-  colnames(wide_df) <- unique(new.rc.unwghtd$sample_processing_id)
+  colnames(wide_df) <- unique(new.rc$sample_processing_id)
   # Convert to matrix
   result_matrix_weighted <- as.matrix(wide_df)
   result_matrix_weighted[is.na(result_matrix_weighted)] <- 0

@@ -20,3 +20,6 @@ A dataframe.
 Given the input read counts and similarity matrix for them, updated counts are
 generated based on the weighted-sum rule.
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

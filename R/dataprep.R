@@ -1,16 +1,19 @@
 #' Data preparation for TCRsimilift
 #'
+#'
 #' Preprocessing the data for downstream use involves:
 #' * adds a column for cdr3 amino acid sequence lengths
 #' * aggregates all counts for each sequence id and each sample.
 #' * replaces NAs with 0.
 #' * returns aggregate data with only necessary associated columns.
 #'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param df AIRR formatted dataframe of immunological data.
 #'
 #' @returns A dataframe
-#' @export
 #'
+
 dataprep <- function(df) {
   df$length <- nchar(df$cdr3_aa) #calculating cdr3 aa length
 

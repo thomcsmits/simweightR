@@ -16,3 +16,6 @@ Similarity score matrix.
 Calculates BLOSUM62-based distance matrix for the given sequences, which is then
 employed to generate a similarity matrix, which is returned.
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

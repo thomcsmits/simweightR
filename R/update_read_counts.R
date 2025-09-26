@@ -3,12 +3,13 @@
 #' Given the input read counts and similarity matrix for them, updated counts are
 #' generated based on the weighted-sum rule.
 #'
+#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#'
 #' @param read_counts A dataframe with read counts for each sequence ID
 #' @param similarity_matrix A matrix of similarity scores for each sequence ID pair
 #' @inheritParams TCRsimilift_calculate
 #'
 #' @returns A dataframe.
-#' @export
 #'
 update_read_counts <- function(read_counts, similarity_matrix, cutoff=0.8) {
   updated_read_counts <- read_counts

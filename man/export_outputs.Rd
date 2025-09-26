@@ -18,3 +18,6 @@ Creates output directory if needed, and saves in it R datasets corresponding
 to the original and respectively to the adjusted counts. Additionally,
 it saves the full data, including adjusted counts, as a gzipped csv file.
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}

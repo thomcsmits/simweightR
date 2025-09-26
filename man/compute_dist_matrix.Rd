@@ -21,3 +21,6 @@ For cdr3 amino acid length in the sample, and for each existing VJ combination,
 a similarity score matrix is calculated for the respective cdr3s. This similarity
 matrix is used to generate updated counts via the update_read_counts() function.
 }
+\details{
+See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+}
