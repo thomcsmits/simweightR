@@ -36,6 +36,6 @@ runs net_update_data to return an updated dataframe with similarity-altered
 counts, and offers the option to export results as .Rds or .csv files.
 }
 \examples{
-results <- TCRsimilift_calculate(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
+results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset, sim_method="HAMMING", cutoff = 0.77, export_results=FALSE)
 
 }
