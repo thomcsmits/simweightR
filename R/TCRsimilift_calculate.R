@@ -3,7 +3,7 @@
 #' Convenience function to do all TCRsimilift data processing in one call.
 #' The function checks the data to ensure format, prepares the data for processing,
 #' runs net_update_data to return an updated dataframe with similarity-altered
-#' counts, and offers the option to export results as .Rds and .csv files.
+#' counts, and offers the option to export results as .Rds or .csv files.
 #'
 #' @param df Input dataframe of AIRR formatted immunological data.
 #' @param sim_method Either HAMMING or BLOSUM.
@@ -32,5 +32,7 @@ TCRsimilift_calculate <- function(df,
   if (export_results) {
     export_outputs(new.data, output_directory = output_directory, csv_output = csv_output)
   }
-  return(new.data)
+  else {
+    return(new.data)
+  }
 }
