@@ -1,0 +1,42 @@
+TCRsimilift_make_weighted_counts <- function(new.data, doFilter=FALSE) {
+  if (doFilter == TRUE) { #if filtering, we need to process unweighted data too
+    ## Save unweighted counts
+    new.rc.unwghtd <- new.data[, c("sequence_id", "consensus_count", "sample_processing_id")]
+    new.rc.unwghtd <- data.frame(new.rc.unwghtd)
+    wide_df <- reshape(new.rc.unwghtd,
+                       idvar = "sequence_id",
+                       timevar = "sample_processing_id",
+                       direction = "wide")
+    rownames(wide_df) <- wide_df$sequence_id
+    wide_df <- wide_df[, -1]
+    # Set the column names
+    colnames(wide_df) <- unique(new.rc.unwghtd$sample_processing_id)
+    # Convert to matrix
+    result_matrix_unweighted <- as.matrix(wide_df)
+    result_matrix_unweighted[is.na(result_matrix_unweighted)] <- 0
+    # Filter rows that occur in at least 2 columns
+    valid_rows <- rowSums(result_matrix_unweighted > 0) >= 2#ceiling(sample_size/4)
+  }
+
+  ## Save weighted counts
+  new.rc <- new.data[, c("sequence_id", "wrc", "sample_processing_id")]
+  new.rc <- data.frame(new.rc)
+  wide_df <- reshape(new.rc,
+                     idvar = "sequence_id",
+                     timevar = "sample_processing_id",
+                     direction = "wide")
+  rownames(wide_df) <- wide_df$sequence_id
+  wide_df <- wide_df[, -1]
+  # Set the column names
+  colnames(wide_df) <- unique(new.rc.unwghtd$sample_processing_id)
+  # Convert to matrix
+  result_matrix_weighted <- as.matrix(wide_df)
+  result_matrix_weighted[is.na(result_matrix_weighted)] <- 0
+  # Use the same valid rows to filter the weighted matrix
+  if (doFilter == TRUE) {
+    return(result_matrix_weighted[valid_rows, ])
+  }
+  else {
+    return(result_matrix_weighted)
+  }
+}
