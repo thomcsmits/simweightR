@@ -3,7 +3,6 @@
 export(adjust_counts)
 export(as_counts_matrix)
 export(datacheck)
-export(export_outputs)
 importFrom(BiocGenerics,score)
 importFrom(Biostrings,pairwiseAlignment)
 importFrom(readr,write_rds)
