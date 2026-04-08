@@ -4,14 +4,14 @@
 #' calculated once for all unique sequences in that group, then applied to each
 #' sample. This avoids recomputing the similarity matrix per sample.
 #'
-#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#' See \link{adjust_counts} for a full example of the DGE workflow.
 #'
 #' @param data.1 Dataframe with counts for all samples, AIRR format.
-#' @inheritParams TCRsimilift_calculate
+#' @inheritParams adjust_counts
 #'
 #' @returns data.1 with added column wrc of adjusted counts.
 #'
-compute_dist_matrix <- function(data.1, sim_method, cutoff=0.8) {
+weight_counts <- function(data.1, sim_method, cutoff=0.8) {
 
   min.l <- min(data.1$length)
   max.l <- max(data.1$length)
@@ -42,7 +42,7 @@ compute_dist_matrix <- function(data.1, sim_method, cutoff=0.8) {
         for (s in unique(vj_data$sample_processing_id)) {
           sample_data <- vj_data[vj_data$sample_processing_id == s, ]
           ord <- match(sample_data$cdr3_aa, unique_seqs)
-          sample_data$wrc <- update_read_counts(sample_data$consensus_count,
+          sample_data$wrc <- update_counts(sample_data$consensus_count,
                                                 sim[ord, ord, drop = FALSE],
                                                 cutoff)
           data.new <- base::rbind(data.new, sample_data)

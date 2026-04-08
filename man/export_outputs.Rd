@@ -7,7 +7,7 @@
 export_outputs(new.data, output_directory = "outputs", csv_output = FALSE)
 }
 \arguments{
-\item{new.data}{Dataframe produced by the TCRsimilift_calculate function.}
+\item{new.data}{Dataframe produced by the adjust_counts function.}
 
 \item{output_directory}{Name of output folder. "outputs" by default.}
 
@@ -19,5 +19,5 @@ to the original and respectively to the adjusted counts. Additionally,
 it saves the full data, including adjusted counts, as a gzipped csv file.
 }
 \details{
-See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+See \link{adjust_counts} for a full example of the DGE workflow.
 }

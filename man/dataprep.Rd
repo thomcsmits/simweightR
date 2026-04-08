@@ -22,5 +22,5 @@ Preprocessing the data for downstream use involves:
 }
 }
 \details{
-See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+See \link{adjust_counts} for a full example of the DGE workflow.
 }

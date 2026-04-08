@@ -17,19 +17,19 @@ library(TCRsimilift)
 
 ## Usage
 
-The easiest way to use the package is by running the `TCRsimilift_calculate()` function on a dataframe containing TCR sequencing data, where the column namings respect the [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). This function will output a dataframe containing aggregated counts, with an additional column `wrc` that contains the adjusted counts based on similarity scores. Please see the help file of the `TCRsimilift_calculate()` for details about all relevant parameters and their defaults.
+The easiest way to use the package is by running the `adjust_counts()` function on a dataframe containing TCR sequencing data, where the column namings respect the [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). This function will output a dataframe containing aggregated counts, with an additional column `wrc` that contains the adjusted counts based on similarity scores. Please see the help file of the `adjust_counts()` for details about all relevant parameters and their defaults.
 
 Here is an example of running this function on the example dataset provided with the package:
 
 ```
-results <- TCRsimilift_calculate(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
+results <- adjust_counts(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
 ```
 
 And here is an example of our data preprocessing, embedded in a full DGE analysis workflow:
 
 ```
-results <- TCRsimilift_calculate(mouse_PBSvTCZ_data)
-count_matrix <- TCRsimilift_make_weighted_counts(results, doFilter = TRUE)
+results <- adjust_counts(mouse_PBSvTCZ_data)
+count_matrix <- as_counts_matrix(results, doFilter = TRUE)
 # Differential gene expression analysis using Wilcoxon test.
 # The functions DGEList(), calcNormFactors() and cpm() need the library edgeR.
   class(count_matrix) <- "numeric"
@@ -66,7 +66,7 @@ It is also possible to run the functions of this pipeline manually to see the ou
  
 * `datacheck()` : will throw an error if the data is formatted incorrectly. 
 * `dataprep()` : creates a dataframe with the appropriate columns and contents to process downstream.
-* `net_update_data()` : adjust counts based on similarity, sample by sample, and return results.
+* `weight_counts()` : compute similarity matrices per VJ+length group and return similarity-adjusted counts for all samples.
 
 If a different method for count adjustment is desired than the weighted average we use, it is also possible to call the functions that output the similarity matrices directly via `blosum_similarity()` or `hamming_similarity()`. See respective help files for details. Bear in mind that all cdr3 amino acid sequences fed to these two functions must have the same length in order to be valid inputs.
 

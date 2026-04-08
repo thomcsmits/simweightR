@@ -2,7 +2,7 @@
 #'
 #' Convenience function to do all TCRsimilift data processing in one call.
 #' The function checks the data to ensure format, prepares the data for processing,
-#' runs compute_dist_matrix to return an updated dataframe with similarity-altered
+#' runs weight_counts to return an updated dataframe with similarity-altered
 #' counts, and offers the option to export results as .Rds or .csv files.
 #'
 #' @param df Input dataframe of AIRR formatted immunological data.
@@ -17,13 +17,13 @@
 #' @export
 #'
 #' @examples
-#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset, sim_method="HAMMING", cutoff = 0.77, export_results=FALSE)
+#' results <- adjust_counts(mouse_PBSvTCZ_data_minisubset, sim_method="HAMMING", cutoff = 0.77, export_results=FALSE)
 #'
 #'#'@examples
 #'\dontrun{
 #' # This is an example of DGE incorporating our data preprocessing.
-#' results <- TCRsimilift_calculate(mouse_PBSvTCZ_data)
-#' count_matrix <- TCRsimilift_make_weighted_counts(results, doFilter = TRUE)
+#' results <- adjust_counts(mouse_PBSvTCZ_data)
+#' count_matrix <- as_counts_matrix(results, doFilter = TRUE)
 #' # Differential gene expression analysis using Wilcoxon test.
 #' # The functions DGEList(), calcNormFactors() and cpm() need the library edgeR.
 #' class(count_matrix) <- "numeric"
@@ -54,7 +54,7 @@
 #' tbl <- outRst[outRst$FDR<=fdrThres,]
 #'}
 #'
-TCRsimilift_calculate <- function(df,
+adjust_counts <- function(df,
                                   sim_method="HAMMING",
                                   cutoff = 0.8,
                                   export_results=FALSE,
@@ -63,7 +63,7 @@ TCRsimilift_calculate <- function(df,
 
   datacheck(df)
   df2 <- dataprep(df)
-  new.data <- compute_dist_matrix(df2, sim_method = sim_method, cutoff = cutoff)
+  new.data <- weight_counts(df2, sim_method = sim_method, cutoff = cutoff)
   if (export_results) {
     export_outputs(new.data, output_directory = output_directory, csv_output = csv_output)
   }

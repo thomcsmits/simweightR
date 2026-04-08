@@ -6,7 +6,7 @@
 #' The function will only have outputs if there are any errors or warnings, otherwise
 #' the dataset is considered OK.
 #'
-#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#' See \link{adjust_counts} for a full example of the DGE workflow.
 #'
 #' @param df Dataframe of immunological data.
 #'

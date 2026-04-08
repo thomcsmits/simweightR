@@ -3,15 +3,15 @@
 #' Given the input read counts and similarity matrix for them, updated counts are
 #' generated based on the weighted-sum rule.
 #'
-#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#' See \link{adjust_counts} for a full example of the DGE workflow.
 #'
 #' @param read_counts A dataframe with read counts for each sequence ID
 #' @param similarity_matrix A matrix of similarity scores for each sequence ID pair
-#' @inheritParams TCRsimilift_calculate
+#' @inheritParams adjust_counts
 #'
 #' @returns A dataframe.
 #'
-update_read_counts <- function(read_counts, similarity_matrix, cutoff=0.8) {
+update_counts <- function(read_counts, similarity_matrix, cutoff=0.8) {
   masked_sim <- similarity_matrix * (similarity_matrix >= cutoff)
   neighbor_sum <- as.vector(masked_sim %*% read_counts)
   neighbor_weight <- rowSums(masked_sim)
