@@ -2,7 +2,7 @@
 #'
 #' Convenience function to do all TCRsimilift data processing in one call.
 #' The function checks the data to ensure format, prepares the data for processing,
-#' runs net_update_data to return an updated dataframe with similarity-altered
+#' runs compute_dist_matrix to return an updated dataframe with similarity-altered
 #' counts, and offers the option to export results as .Rds or .csv files.
 #'
 #' @param df Input dataframe of AIRR formatted immunological data.
@@ -63,7 +63,7 @@ TCRsimilift_calculate <- function(df,
 
   datacheck(df)
   df2 <- dataprep(df)
-  new.data <- net_update_data(df2, sim_method = sim_method, cutoff=cutoff)
+  new.data <- compute_dist_matrix(df2, sim_method = sim_method, cutoff = cutoff)
   if (export_results) {
     export_outputs(new.data, output_directory = output_directory, csv_output = csv_output)
   }
