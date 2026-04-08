@@ -4,21 +4,24 @@
 \alias{as_counts_matrix}
 \title{Make count matrix from outputs of adjust_counts}
 \usage{
-as_counts_matrix(new.data, doFilter = FALSE)
+as_counts_matrix(new.data, doFilter = FALSE, weighted = TRUE)
 }
 \arguments{
 \item{new.data}{A dataframe outputted by \link{adjust_counts}}
 
 \item{doFilter}{Filter out sequences that do not have at least 2 counts? TRUE/FALSE.}
+
+\item{weighted}{Return similarity-adjusted counts (\code{wrc})? If \code{FALSE},
+returns original counts (\code{consensus_count}). Default \code{TRUE}.}
 }
 \value{
-Count matrix containing weighted counts for each sequence and sample.
+Count matrix containing counts for each sequence and sample.
 }
 \description{
 This function takes a dataframe which is output by adjust_counts,
 which may contain many columns besides the information about counts,
 sequence IDs and samples. It then outputs a counts matrix, where each row
-refers to a sequence, each columns is a sample, and the values therein are
+refers to a sequence, each column is a sample, and the values therein are
 counts. Such a count matrix can then be passed on into conventional
 DGE workflows such as edgeR and deseq2, as well as other methods
 for analyzing DGE such as the Wilcoxon test.
@@ -29,6 +32,6 @@ See \link{adjust_counts} for a full example of the DGE workflow.
 \examples{
 results <- adjust_counts(mouse_PBSvTCZ_data_minisubset)
 count_matrix <- as_counts_matrix(results)
-
+count_matrix_unweighted <- as_counts_matrix(results, weighted = FALSE)
 
 }
