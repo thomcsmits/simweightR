@@ -116,7 +116,7 @@ test_that("fig5_update_read_counts matches package update_read_counts", {
     0.3, 0.4, 0.8, 1.0
   ), nrow = 4)
 
-  pkg_result <- update_read_counts(counts, sim, cutoff = 0.8)
+  pkg_result <- update_counts(counts, sim, cutoff = 0.8)
   fig_result <- fig5_update_read_counts(counts, sim, threshold = 0.8)
 
   expect_equal(pkg_result, fig_result)
@@ -140,7 +140,7 @@ test_that("fig5 hamming similarity matches package hamming_similarity", {
 })
 
 test_that("full pipeline: package and figure-5 logic return identical wrc values", {
-  pkg_result <- TCRsimilift_calculate(mouse_PBSvTCZ_data_minisubset,
+  pkg_result <- adjust_counts(mouse_PBSvTCZ_data_minisubset,
                                       sim_method = "HAMMING",
                                       cutoff = 0.8)
   fig_result <- fig5_pipeline(mouse_PBSvTCZ_data_minisubset, threshold = 0.8)
