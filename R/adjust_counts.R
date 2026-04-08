@@ -55,11 +55,11 @@
 #'}
 #'
 adjust_counts <- function(df,
-                                  sim_method="HAMMING",
-                                  cutoff = 0.8,
-                                  export_results=FALSE,
-                                  output_directory = "outputs",
-                                  csv_output = FALSE) {
+                          sim_method="HAMMING",
+                          cutoff = 0.8,
+                          export_results=FALSE,
+                          output_directory = "outputs",
+                          csv_output = FALSE) {
 
   datacheck(df)
   df2 <- dataprep(df)
