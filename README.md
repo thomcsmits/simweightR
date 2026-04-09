@@ -1,6 +1,6 @@
 # simweightR: similarity-based counts weighting of T-cell receptor data for differential abundance analysis
 
-simweightR is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
+simweightR is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2025). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
 
 The package can be used to pre-process immunological sequencing data from T-cell receptor sequencing data. The pre-processing involves an adjustment of count values based on the expression levels of highly similar TCRs, thereby improving detection of differential abundance analysis via various methods, including the Wilcoxon signed-rank test and DESeq2. 
 
