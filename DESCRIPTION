@@ -1,15 +1,15 @@
-Package: TCRsimilift
+Package: simweightR
 Title: TCR sequencing data preprocessing via similarity-based count adjustment
 Version: 0.0.0.9000
 Authors@R: c(
     person("Radu", "Diaconescu", , "r.diaconescu@stud.uni-goettingen.de", role = c("aut")),
+    person("Thomas", "Smits", , "", role = c("aut"))
     person("Franka", "Buytenhuijs", , "", role = c("aut")),
     person("Johannes", "Textor", , "johannes.textor@ru.nl", role = c("aut", "cre")),
     person("Ankur", "Ankan", , "", role = c("aut"))
     )
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: Preprocessing TCRseq data with similarity-based counts weighting for differential abundance analysis.
+License: MIT
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

@@ -1,4 +1,4 @@
 library(testthat)
-library(TCRsimilift)
+library(simweightR)
 
-test_check("TCRsimilift")
+test_check("simweightR")

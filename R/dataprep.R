@@ -1,4 +1,4 @@
-#' Data preparation for TCRsimilift
+#' Data preparation for simweightR
 #'
 #'
 #' Preprocessing the data for downstream use involves:

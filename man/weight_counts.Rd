@@ -9,7 +9,10 @@ weight_counts(data.1, sim_method, cutoff = 0.8)
 \arguments{
 \item{data.1}{Dataframe with counts for all samples, AIRR format.}
 
-\item{sim_method}{Either HAMMING or BLOSUM.}
+\item{sim_method}{Similarity method to use. Either \code{"HAMMING"}, \code{"BLOSUM"},
+or a custom function. A custom function receives a dataframe of unique sequences
+for each VJ+length group (with at least \code{cdr3_aa} and \code{length} columns)
+and must return a square numeric matrix of similarity scores between 0 and 1.}
 
 \item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }

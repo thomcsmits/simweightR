@@ -2,14 +2,17 @@
 % Please edit documentation in R/adjust_counts.R
 \name{adjust_counts}
 \alias{adjust_counts}
-\title{Use TCRsimilift}
+\title{Use simweightR}
 \usage{
 adjust_counts(df, sim_method = "HAMMING", cutoff = 0.8)
 }
 \arguments{
 \item{df}{Input dataframe of AIRR formatted immunological data.}
 
-\item{sim_method}{Either HAMMING or BLOSUM.}
+\item{sim_method}{Similarity method to use. Either \code{"HAMMING"}, \code{"BLOSUM"},
+or a custom function. A custom function receives a dataframe of unique sequences
+for each VJ+length group (with at least \code{cdr3_aa} and \code{length} columns)
+and must return a square numeric matrix of similarity scores between 0 and 1.}
 
 \item{cutoff}{Minimum similarity score to consider two sequences neighbours. Between 0 and 1. Default 0.8 .}
 }
@@ -17,7 +20,7 @@ adjust_counts(df, sim_method = "HAMMING", cutoff = 0.8)
 Returns dataframe with extra column of adjusted counts based on similarity.
 }
 \description{
-Convenience function to do all TCRsimilift data processing in one call.
+Convenience function to do all simweightR data processing in one call.
 The function checks the data to ensure format, prepares the data for processing,
 and runs weight_counts to return an updated dataframe with similarity-adjusted
 counts.

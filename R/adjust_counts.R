@@ -1,6 +1,6 @@
-#' Use TCRsimilift
+#' Use simweightR
 #'
-#' Convenience function to do all TCRsimilift data processing in one call.
+#' Convenience function to do all simweightR data processing in one call.
 #' The function checks the data to ensure format, prepares the data for processing,
 #' and runs weight_counts to return an updated dataframe with similarity-adjusted
 #' counts.

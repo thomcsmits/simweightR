@@ -4,7 +4,7 @@ author: "Radu Diaconescu & Thomas Smits"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{TCRsimilift-Guide}
+  %\VignetteIndexEntry{simweightR-guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,18 +17,18 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(TCRsimilift)
+library(simweightR)
 ```
 
 # Introduction
 
-The TCRsimilift package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
+The simweightR package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
 
 The package pre-processes immunological sequencing data from T-cell receptor sequencing data by adjusting read counts based on the expression levels of highly similar TCRs. This improves true positive rates in differential abundance (DA) analysis.
 
 # Data Input Format
 
-TCRsimilift expects a dataframe formatted according to [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). The following columns are required:
+simweightR expects a dataframe formatted according to [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). The following columns are required:
 
 | Column | Description |
 |---|---|

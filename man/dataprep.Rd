@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataprep.R
 \name{dataprep}
 \alias{dataprep}
-\title{Data preparation for TCRsimilift}
+\title{Data preparation for simweightR}
 \usage{
 dataprep(df)
 }
