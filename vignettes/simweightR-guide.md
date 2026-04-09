@@ -1,0 +1,196 @@
+---
+title: "simweights: similarity-based weighting for TCR differential abundance analysis"
+author: "Radu Diaconescu & Thomas Smits"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simweightR-guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(simweightR)
+```
+
+# Introduction
+
+The simweightR package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
+
+The package pre-processes immunological sequencing data from T-cell receptor sequencing data by adjusting read counts based on the expression levels of highly similar TCRs. This improves true positive rates in differential abundance (DA) analysis.
+
+# Data Input Format
+
+simweightR expects a dataframe formatted according to [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). The following columns are required:
+
+| Column | Description |
+|---|---|
+| `sequence_id` | Unique identifier for each TCR sequence |
+| `cdr3_aa` | Amino acid sequence of the CDR3 region |
+| `consensus_count` | Read count for this sequence in this sample |
+| `v_call` | V gene with allele (e.g. `TRBV12-3*01`) |
+| `j_call` | J gene with allele (e.g. `TRBJ1-2*01`) |
+| `sample_processing_id` | Sample identifier |
+
+The package includes a minisubset for quick testing, and a full dataset of 22,000 rows from a mice experiment:
+
+```{r}
+head(mouse_PBSvTCZ_data_minisubset[, c("sequence_id", "cdr3_aa", "consensus_count",
+                                        "v_call", "j_call", "sample_processing_id")])
+```
+
+```{r}
+unique(mouse_PBSvTCZ_data_minisubset$sample_processing_id)
+```
+
+# Running the Pipeline
+
+## adjust_counts()
+
+The main entry point is `adjust_counts()`. It validates the input, aggregates counts per sequence per sample, computes similarity matrices for sequences sharing the same CDR3 length and V-J gene pair, and returns a dataframe with similarity-adjusted counts:
+
+```{r}
+results <- adjust_counts(mouse_PBSvTCZ_data_minisubset)
+```
+
+Key parameters:
+
+- `sim_method`: `"HAMMING"` (default), `"BLOSUM"`, or custom function — see [Similarity Methods](#similarity-methods) below.
+- `cutoff`: similarity score threshold (default `0.8`) — see [Cutoff Parameter](#cutoff-parameter) below.
+
+# Outputs
+
+`adjust_counts()` returns a dataframe with one row per sequence per sample. The key output column is `wrc` (weighted read count), the weighted `consensus_count`:
+
+```{r}
+head(results[, c("sequence_id", "sample_processing_id", "consensus_count", "wrc")])
+```
+
+A sequence keeps its original count if it has no neighbours above the similarity cutoff. Otherwise its count is adjusted toward the weighted average of its neighbourhood.
+
+## as_counts_matrix()
+
+To use the counts in a DA workflow, convert the output to a wide count matrix with `as_counts_matrix()`. Rows are sequences, columns are samples. By default it returns the similarity-adjusted counts (`wrc`), With `weighted = FALSE` it gives the original counts:
+
+```{r}
+count_matrix <- as_counts_matrix(results)
+count_matrix_unweighted <- as_counts_matrix(results, weighted = FALSE)
+count_matrix[1:4, ]
+```
+
+Setting `doFilter = TRUE` removes sequences that do not appear with at least one count in two or more samples, reducing noise before DA analysis:
+
+```{r}
+count_matrix_filtered <- as_counts_matrix(results, doFilter = TRUE)
+dim(count_matrix_filtered)
+```
+
+# Downstream Analysis
+
+## Wilcoxon Test (via edgeR normalisation)
+
+The following workflow normalises the count matrix with edgeR's TMM method and applies a Wilcoxon test per sequence. This is the approach described in the accompanying pre-print.
+
+```{r, eval=FALSE}
+results <- adjust_counts(mouse_PBSvTCZ_data)
+count_matrix <- as_counts_matrix(results, doFilter = TRUE)
+
+library(edgeR)
+
+class(count_matrix) <- "numeric"
+sample_size <- 2
+condition <- factor(c(rep("treatment", sample_size), rep("non-treatment", sample_size)))
+
+y <- DGEList(counts = count_matrix, group = condition)
+y <- calcNormFactors(y, method = "TMM")
+count_norm <- as.data.frame(cpm(y))
+
+pvalues <- sapply(1:nrow(count_norm), function(i) {
+  data <- cbind.data.frame(gene = as.numeric(t(count_norm[i, ])), condition)
+  wilcox.test(gene ~ condition, data)$p.value
+})
+pvalues <- data.frame(pvalues, row.names = rownames(count_norm))
+pvalues$fdr <- p.adjust(pvalues$pvalues, method = "fdr")
+
+conditionsLevel <- levels(condition)
+dataCon1 <- count_norm[, which(condition == conditionsLevel[1])]
+dataCon2 <- count_norm[, which(condition == conditionsLevel[2])]
+dataCon2 <- dataCon2[rownames(dataCon1), ]
+pvalues <- pvalues[rownames(dataCon1), ]
+
+foldChanges <- log2((rowMeans(dataCon2) + 1) / (rowMeans(dataCon1) + 1))
+results_da <- data.frame(
+  log2foldChange = foldChanges,
+  pValues = pvalues$pvalues,
+  FDR = pvalues$fdr,
+  row.names = rownames(dataCon1)
+)
+results_da <- na.omit(results_da)
+```
+
+## DESeq2
+
+DESeq2 requires integer counts. Round the `wrc` values before passing them in:
+
+```{r, eval=FALSE}
+results <- adjust_counts(mouse_PBSvTCZ_data)
+count_matrix <- as_counts_matrix(results, doFilter = TRUE)
+
+library(DESeq2)
+
+count_matrix_int <- round(count_matrix)
+col_data <- data.frame(
+  condition = factor(c(rep("treatment", 2), rep("control", 2))),
+  row.names = colnames(count_matrix_int)
+)
+
+dds <- DESeqDataSetFromMatrix(countData = count_matrix_int,
+                               colData = col_data,
+                               design = ~ condition)
+dds <- DESeq(dds)
+res <- results(dds, contrast = c("condition", "treatment", "control"))
+res_df <- as.data.frame(res[order(res$padj), ])
+```
+
+# Parameter Details
+
+## Similarity Methods
+
+The `sim_method` parameter controls how sequence similarity is computed within each CDR3 length / V-J gene group.
+
+**`"HAMMING"` (default):** normalised Hamming distance between equal-length CDR3 amino acid sequences. A similarity of 1 means the sequences are identical; each mismatched position reduces the score by `1 / length`. Fast and suitable for most use cases.
+
+**`"BLOSUM"`:** pairwise alignment scores using the BLOSUM62 substitution matrix, normalised to [0, 1]. Accounts for amino acid biochemical properties — conservative substitutions (e.g. Leu → Ile) receive a higher similarity than radical ones (e.g. Leu → Asp). More biologically informed than Hamming, but slower.
+
+```{r, eval=FALSE}
+results_hamming <- adjust_counts(mouse_PBSvTCZ_data_minisubset, sim_method = "HAMMING")
+results_blosum <- adjust_counts(mouse_PBSvTCZ_data_minisubset, sim_method = "BLOSUM")
+```
+
+**Custom function:** you can also pass any function that takes a dataframe of sequences and returns a square similarity matrix with values in [0, 1]. The function is called once per CDR3 length / V-J group:
+
+```{r, eval=FALSE}
+my_sim <- function(seq_df) {
+  matrix(0.9, nrow = nrow(seq_df), ncol = nrow(seq_df))
+}
+results_custom <- adjust_counts(mouse_PBSvTCZ_data_minisubset, sim_method = my_sim)
+```
+
+## Cutoff Parameter
+
+The `cutoff` parameter (default `0.8`) is the minimum similarity score for two sequences to be treated as neighbours. Sequences below this threshold do not affect each other's adjusted counts.
+
+- A **higher** cutoff (e.g. `0.9`) is more stringent: only nearly identical sequences are pooled together.
+- A **lower** cutoff (e.g. `0.7`) allows more distant sequences to contribute, increasing smoothing but risking blending of biologically distinct clonotypes.
+
+```{r}
+results_strict <- adjust_counts(mouse_PBSvTCZ_data_minisubset, cutoff = 0.9)
+results_lenient <- adjust_counts(mouse_PBSvTCZ_data_minisubset, cutoff = 0.7)
+```

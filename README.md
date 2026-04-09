@@ -1,84 +1,28 @@
-# TCRsimilift
+# simweightR: similarity-based counts weighting of T-cell receptor data for differential abundance analysis
 
-## Name
-TCRsimilift - TCR sequencing data preprocessing via similarity-based count adjustment
+simweightR is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
 
-## Description
-The TCRsimilift package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
-
-The package can be used to pre-process immunological sequencing data from T Cell Receptor samples. The pre-processing involves an adjustment of count values based on the expression levels of highly similar TCRs, thereby improving detection of differential gene expression via various methods, including edgeR, deseq2 and the Wilcoxon test. 
-
-In essence, the approach involves the calculation of similarity scores between each TCR sequence and all other similar sequences in a given dataset. The counts of each TCR are then adjusted based on a weighted average of their neighbours in the similarity graph. For details regarding the theory behind the method, please see the pre-print.
+The package can be used to pre-process immunological sequencing data from T-cell receptor sequencing data. The pre-processing involves an adjustment of count values based on the expression levels of highly similar TCRs, thereby improving detection of differential abundance analysis via various methods, including the Wilcoxon signed-rank test and DESeq2. 
 
 ## Installation
-```
-library(TCRsimilift)
+```r
+remotes::install_github("thomcsmits/simweightR")
+library(simweightR)
 ```
 
 ## Usage
 
-The easiest way to use the package is by running the `TCRsimilift_calculate()` function on a dataframe containing TCR sequencing data, where the column namings respect the [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). This function will output a dataframe containing aggregated counts, with an additional column `wrc` that contains the adjusted counts based on similarity scores. Please see the help file of the `TCRsimilift_calculate()` for details about all relevant parameters and their defaults.
+simweightR follows [AIRR Standards 1.6](https://docs.airr-community.org/en/stable/datarep/rearrangements.html). Adjusting the counts as follows:
 
-Here is an example of running this function on the example dataset provided with the package:
-
-```
-results <- TCRsimilift_calculate(mouse_PBSvTCZ_data, sim_method="HAMMING", cutoff = 0.77, export_results=TRUE, output_directory="my_outputs")
-```
-
-And here is an example of our data preprocessing, embedded in a full DGE analysis workflow:
-
-```
-results <- TCRsimilift_calculate(mouse_PBSvTCZ_data)
-count_matrix <- TCRsimilift_make_weighted_counts(results, doFilter = TRUE)
-# Differential gene expression analysis using Wilcoxon test.
-# The functions DGEList(), calcNormFactors() and cpm() need the library edgeR.
-  class(count_matrix) <- "numeric"
- sample_size <- 2
- condition <- factor(c( rep("treatment", sample_size), rep("non-treatment", sample_size)))
- y <- edgeR::DGEList( counts=count_matrix, group=condition )
- y <- edgeR::calcNormFactors(y,method="TMM")
- count_norm=edgeR::cpm(y)
- count_norm<-as.data.frame(count_norm)
- pvalues <- sapply(1:nrow(count_norm),function(i){
-   data<-cbind.data.frame(gene=as.numeric(t(count_norm[i,])),condition)
-   p=wilcox.test(gene~condition, data)$p.value
-   return(p)
-   })
- pvalues <- data.frame(pvalues)
- rownames(pvalues) <- rownames(count_norm)
- pvalues$fdr=p.adjust(pvalues$pvalues,method = "fdr")
- conditionsLevel<-levels(condition)
- dataCon1=count_norm[,c(which(condition==conditionsLevel[1]))]
- dataCon2=count_norm[,c(which(condition==conditionsLevel[2]))]
- dataCon2 <- dataCon2[rownames(dataCon1), ]
- pvalues <- pvalues[rownames(dataCon1), ]
- foldChanges=log2((rowMeans(dataCon2) + 1) / (rowMeans(dataCon1) + 1))
- outRst<-data.frame(log2foldChange=foldChanges, pValues=pvalues$pvalues, FDR=pvalues$fdr)
- rownames(outRst)=rownames(count_norm)
- outRst=na.omit(outRst)
- fdrThres=1
- tbl <- outRst[outRst$FDR<=fdrThres,]
+```r
+library(simweightR)
+results <- adjust_counts(data)
 ```
 
-### Alternatively: running the functions in the pipeline separately
+The weighted counts are now in `results$wrc`. For integration with downstream methods that require a matrix, simply convert to the appropriate format using:
 
-It is also possible to run the functions of this pipeline manually to see the outputs created along the way. These are as follows:
- 
-* `datacheck()` : will throw an error if the data is formatted incorrectly. 
-* `dataprep()` : creates a dataframe with the appropriate columns and contents to process downstream.
-* `net_update_data()` : adjust counts based on similarity, sample by sample, and return results.
-
-If a different method for count adjustment is desired than the weighted average we use, it is also possible to call the functions that output the similarity matrices directly via `blosum_similarity()` or `hamming_similarity()`. See respective help files for details. Bear in mind that all cdr3 amino acid sequences fed to these two functions must have the same length in order to be valid inputs.
-
-In the package code, the similarity is calculated for all TCRs with the same CDR3 amino acid sequence length separately, via a loop like so:
-```
-for (seq_length in all_sequence_lengths) {
-  # calculate similarity matrices and adjust counts
-}
+```r
+count_matrix <- as_counts_matrix(results)
 ```
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
+See our accompanying vignette for more examples.

@@ -1,4 +1,4 @@
-#' Data preparation for TCRsimilift
+#' Data preparation for simweightR
 #'
 #'
 #' Preprocessing the data for downstream use involves:
@@ -7,7 +7,7 @@
 #' * replaces NAs with 0.
 #' * returns aggregate data with only necessary associated columns.
 #'
-#' See \link{TCRsimilift_calculate} for a full example of the DGE workflow.
+#' See \link{adjust_counts} for a full example of the DGE workflow.
 #'
 #' @param df AIRR formatted dataframe of immunological data.
 #'
