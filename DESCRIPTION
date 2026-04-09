@@ -3,7 +3,7 @@ Title: TCR sequencing data preprocessing via similarity-based count adjustment
 Version: 0.0.0.9000
 Authors@R: c(
     person("Radu", "Diaconescu", , "r.diaconescu@stud.uni-goettingen.de", role = c("aut")),
-    person("Thomas", "Smits", , "", role = c("aut"))
+    person("Thomas", "Smits", , "", role = c("aut")),
     person("Franka", "Buytenhuijs", , "", role = c("aut")),
     person("Johannes", "Textor", , "johannes.textor@ru.nl", role = c("aut", "cre")),
     person("Ankur", "Ankan", , "", role = c("aut"))
