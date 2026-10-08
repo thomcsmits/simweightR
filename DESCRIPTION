@@ -9,15 +9,12 @@ Authors@R: c(
     person("Ankur", "Ankan", , "", role = c("aut"))
     )
 Description: Preprocessing TCRseq data with similarity-based counts weighting for differential abundance analysis.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Imports:
-    BiocGenerics,
-    Biostrings,
-    Matrix,
-    readr,
+    parallel,
     stringdist
 Depends: 
     R (>= 3.5)

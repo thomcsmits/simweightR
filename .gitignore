@@ -9,3 +9,5 @@ inst/doc
 tmp
 /doc/
 /Meta/
+old/
+data-raw/*/*.csv

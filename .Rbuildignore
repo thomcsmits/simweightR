@@ -4,3 +4,6 @@
 ^doc$
 ^Meta$
 ^LICENSE\.md$
+^data-raw$
+^tmp$
+^\.lintr$
