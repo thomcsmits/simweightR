@@ -40,7 +40,5 @@ simweight <- function(df,
                       count = "consensus_count") {
   x <- prepare_counts(df, cdr3 = cdr3, v = v, j = j, sample = sample, count = count)
   x <- weight_counts(x, threshold = threshold, method = method, nthread = nthread, n_cores = n_cores)
-  # filter tbd
-  # x <- filter_counts(x, min_samples = min_samples, min_count = min_count)
   x
 }
