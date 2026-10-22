@@ -1,8 +1,8 @@
-# simweightR: similarity-based counts weighting of T-cell receptor data for differential abundance analysis
+# simweightR: similarity-based counts weighting of T cell receptor data for differential abundance analysis
 
-simweightR is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2025). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
+simweightR is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al., "Differential T cell receptor clonotype abundance analysis with similarity-based counts weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951).
 
-The package can be used to pre-process immunological sequencing data from T-cell receptor sequencing data. The pre-processing involves an adjustment of count values based on the expression levels of highly similar TCRs, thereby improving detection of differential abundance analysis via various methods, including the Wilcoxon signed-rank test and DESeq2. 
+The package can be used to pre-process immunological sequencing data from T cell receptor sequencing data. The pre-processing involves an adjustment of count values based on the expression levels of highly similar TCRs, thereby improving detection of differential abundance analysis via various methods, including the Wilcoxon rank-sum test and DESeq2. 
 
 ## Installation
 ```r
@@ -16,13 +16,15 @@ simweightR follows [AIRR Standards 1.6](https://docs.airr-community.org/en/stabl
 
 ```r
 library(simweightR)
-results <- adjust_counts(data)
+x <- simweight(mouse_pbs_srbc_mini)
 ```
 
-The weighted counts are now in `results$wrc`. For integration with downstream methods that require a matrix, simply convert to the appropriate format using:
+The weighted counts are now in `x$weighted`.
 
 ```r
-count_matrix <- as_counts_matrix(results)
+head(x$sequences)
+head(x$counts[, 1:4])
+head(x$weighted[, 1:4])
 ```
 
 See our accompanying vignette for more examples.

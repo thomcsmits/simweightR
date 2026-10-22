@@ -1,6 +1,6 @@
-^TCRsimilift\.Rproj$
-^simweightR\.Rproj$
-^\.Rproj\.user$
 ^doc$
 ^Meta$
 ^LICENSE\.md$
+^data-raw$
+^tmp$
+^\.lintr$
