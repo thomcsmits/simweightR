@@ -41,3 +41,9 @@ one column per sample, in the same order as the rows of sequences
 \description{
 Get counts per sample for V gene + J gene + CDR3 amino acid sequence group
 }
+\examples{
+x <- prepare_counts(mouse_pbs_srbc_mini)
+head(x$sequences)
+head(x$counts[, 1:4])
+
+}

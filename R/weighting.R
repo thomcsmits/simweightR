@@ -52,6 +52,14 @@ weight_group <- function(counts, similarity, threshold) {
 #' @returns x with an extra element weighted: matrix of weighted counts, same
 #'   dimensions and row order as x$counts
 #'
+#' @examples
+#' x <- prepare_counts(mouse_pbs_srbc_mini)
+#'
+#' # try several thresholds without repeating the preparation
+#' x1 <- weight_counts(x, threshold = 0.8)
+#' x2 <- weight_counts(x, threshold = 0.9)
+#' head(x2$weighted[, 1:4])
+#'
 #' @export
 weight_counts <- function(x, threshold, method = "hamming", nthread = 1,
                           n_cores = 1) {

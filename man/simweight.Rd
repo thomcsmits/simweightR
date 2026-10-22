@@ -67,6 +67,14 @@ simweight prepares and weights counts in one call
 \details{
 Runs \code{\link[=prepare_counts]{prepare_counts()}} and \code{\link[=weight_counts]{weight_counts()}}
 }
+\examples{
+x <- simweight(mouse_pbs_srbc_mini)
+head(x$weighted[, 1:4])
+
+# BLOSUM62 similarity with a stricter threshold
+x2 <- simweight(mouse_pbs_srbc_mini, method = "blosum", threshold = 0.9)
+
+}
 \seealso{
 \code{\link[=prepare_counts]{prepare_counts()}} and \code{\link[=weight_counts]{weight_counts()}} to run the two steps
 separately, e.g. to try several thresholds without repeating the

@@ -11,6 +11,11 @@
 #'   * counts: matrix of counts, one row per sequence (rownames "V_CDR3_J") and
 #'     one column per sample, in the same order as the rows of sequences
 #'
+#' @examples
+#' x <- prepare_counts(mouse_pbs_srbc_mini)
+#' head(x$sequences)
+#' head(x$counts[, 1:4])
+#'
 #' @export
 prepare_counts <- function(df,
                            cdr3 = "cdr3_aa",

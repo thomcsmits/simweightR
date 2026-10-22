@@ -41,6 +41,13 @@
 #'   separately, e.g. to try several thresholds without repeating the
 #'   preparation.
 #'
+#' @examples
+#' x <- simweight(mouse_pbs_srbc_mini)
+#' head(x$weighted[, 1:4])
+#'
+#' # BLOSUM62 similarity with a stricter threshold
+#' x2 <- simweight(mouse_pbs_srbc_mini, method = "blosum", threshold = 0.9)
+#'
 #' @export
 simweight <- function(df,
                       threshold = 0.8,

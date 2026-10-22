@@ -1,15 +1,17 @@
 Package: simweightR
-Title: TCR sequencing data preprocessing via similarity-based count adjustment
-Version: 0.0.0.9000
+Title: TCR Sequencing Data Preprocessing Via Similarity-Based Count Adjustment
+Version: 0.1.0
 Authors@R: c(
-    person("Thomas", "Smits", , "Thomas.Smits@Radboudumc.nl", role = c("aut", "cre")),
-    person("Radu", "Diaconescu", , "r.diaconescu@stud.uni-goettingen.de", role = c("aut")),
-    person("Franka", "Buytenhuijs", , "", role = c("aut")),
-    person("Ankur", "Ankan", , "", role = c("aut")),
-    person("Johannes", "Textor", , "johannes.textor@ru.nl", role = c("aut", "cre"))
+    person("Thomas", "Smits", email = "Thomas.Smits@Radboudumc.nl", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-5486-9890")),
+    person("Radu", "Diaconescu", email = "r.diaconescu@stud.uni-goettingen.de", role = c("aut")),
+    person("Franka", "Buytenhuijs", role = c("aut")),
+    person("Ankur", "Ankan", role = c("aut"), comment = c(ORCID = "0000-0001-5591-9784")),
+    person("Johannes", "Textor", email = "johannes.textor@ru.nl", role = c("aut"), comment = c(ORCID = "0000-0002-0459-9458"))
     )
-Description: Preprocessing TCRseq data with similarity-based counts weighting for differential abundance analysis.
+Description: Preprocessing T cell receptor (TCR) sequencing data with similarity-based counts weighting for differential abundance (DA) analysis. Calculates similarity between sequences and weights sequence counts based on neighbouring sequences. This preprocessing step can be combined with different DA analysis methods such as the Wilcoxon rank-sum test or 'DESeq2', and improves detection, as described in Buytenhuijs et al. (2025) <doi:10.1101/2025.03.28.645951>.
 License: MIT + file LICENSE
+URL: https://github.com/thomcsmits/simweightR
+BugReports: https://github.com/thomcsmits/simweightR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

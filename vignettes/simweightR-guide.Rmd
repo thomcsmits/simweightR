@@ -22,9 +22,9 @@ library(simweightR)
 
 # Introduction
 
-The simweightR package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al. (2024). "Differential T cell receptor gene expression analysis using the Wilcoxon test with similarity-based weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951v1).
+The simweightR package is a lightweight R implementation of the data pre-processing pipeline described in [Buytenhuijs et al., "Differential T cell receptor clonotype abundance analysis with similarity-based counts weighting"](https://www.biorxiv.org/content/10.1101/2025.03.28.645951).
 
-The package pre-processes immunological sequencing data from T-cell receptor sequencing data by adjusting read counts based on the expression levels of highly similar TCRs. This improves true positive rates in differential abundance (DA) analysis.
+The package pre-processes immunological sequencing data from T cell receptor sequencing data by adjusting read counts based on the expression levels of highly similar TCRs. This improves true positive rates in differential abundance (DA) analysis.
 
 # Data Input Format
 
@@ -76,8 +76,8 @@ Key parameters:
 
 ```{r}
 head(x$sequences)
-x$counts[1:4, 1:4]
-x$weighted[1:4, 1:4]
+head(x$counts[, 1:4])
+head(x$weighted[, 1:4])
 ```
 
 A sequence keeps its original count if it has no neighbours above the similarity threshold. Otherwise its count is adjusted toward the weighted average of its neighbourhood.
@@ -96,7 +96,6 @@ count_matrix <- x$weighted
 
 library(edgeR)
 
-class(count_matrix) <- "numeric"
 # condition of each sample, in the order of the columns of count_matrix
 samples <- unique(mouse_pbs_srbc[, c("sample_processing_id", "treatment")])
 condition <- factor(samples$treatment[match(colnames(count_matrix), samples$sample_processing_id)],
@@ -106,25 +105,25 @@ y <- DGEList(counts = count_matrix, group = condition)
 y <- calcNormFactors(y, method = "TMM")
 count_norm <- as.data.frame(cpm(y))
 
-pvalues <- sapply(1:nrow(count_norm), function(i) {
+pvalues <- sapply(seq_len(nrow(count_norm)), function(i) {
   data <- cbind.data.frame(gene = as.numeric(t(count_norm[i, ])), condition)
   wilcox.test(gene ~ condition, data)$p.value
 })
 pvalues <- data.frame(pvalues, row.names = rownames(count_norm))
 pvalues$fdr <- p.adjust(pvalues$pvalues, method = "fdr")
 
-conditionsLevel <- levels(condition)
-dataCon1 <- count_norm[, which(condition == conditionsLevel[1])]
-dataCon2 <- count_norm[, which(condition == conditionsLevel[2])]
-dataCon2 <- dataCon2[rownames(dataCon1), ]
-pvalues <- pvalues[rownames(dataCon1), ]
+condition_levels <- levels(condition)
+data_con1 <- count_norm[, which(condition == condition_levels[1])]
+data_con2 <- count_norm[, which(condition == condition_levels[2])]
+data_con2 <- data_con2[rownames(data_con1), ]
+pvalues <- pvalues[rownames(data_con1), ]
 
-foldChanges <- log2((rowMeans(dataCon2) + 1) / (rowMeans(dataCon1) + 1))
+fold_changes <- log2((rowMeans(data_con2) + 1) / (rowMeans(data_con1) + 1))
 results_da <- data.frame(
-  log2foldChange = foldChanges,
+  log2foldChange = fold_changes,
   pValues = pvalues$pvalues,
   FDR = pvalues$fdr,
-  row.names = rownames(dataCon1)
+  row.names = rownames(data_con1)
 )
 results_da <- na.omit(results_da)
 ```
@@ -143,8 +142,9 @@ count_matrix_int <- round(count_matrix)
 # condition of each sample, in the order of the columns of count_matrix
 samples <- unique(mouse_pbs_srbc[, c("sample_processing_id", "treatment")])
 col_data <- data.frame(
-condition = factor(samples$treatment[match(colnames(count_matrix_int), samples$sample_processing_id)],
-              levels = c("PBS", "SRBC_4d")),
+  condition = factor(samples$treatment[match(colnames(count_matrix_int),
+                                             samples$sample_processing_id)],
+                     levels = c("PBS", "SRBC_4d")),
   row.names = colnames(count_matrix_int)
 )
 

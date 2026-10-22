@@ -37,3 +37,12 @@ Splits the sequences into groups with the same V gene, J gene and CDR3
 length, computes the similarity within each group and replaces the counts by
 similarity-weighted counts.
 }
+\examples{
+x <- prepare_counts(mouse_pbs_srbc_mini)
+
+# try several thresholds without repeating the preparation
+x1 <- weight_counts(x, threshold = 0.8)
+x2 <- weight_counts(x, threshold = 0.9)
+head(x2$weighted[, 1:4])
+
+}
