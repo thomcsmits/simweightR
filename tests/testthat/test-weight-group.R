@@ -67,8 +67,8 @@ test_that("weighting weighted average is correct for two equal sequences", {
 test_that("weighting gives the toy example values", {
   # seq1 and seq2 are neighbours (6/7 >= 0.8); seq3 is not (0.5 < 0.8)
   counts <- cbind(c(10, 0, 4))
-  sim <- matrix(c(1, 6/7, 0.5,
-                  6/7, 1, 0.5,
+  sim <- matrix(c(1, 6 / 7, 0.5,
+                  6 / 7, 1, 0.5,
                   0.5, 0.5, 1), nrow = 3)
   result <- weight_group(counts, sim, threshold = 0.8)
 
@@ -81,8 +81,8 @@ test_that("weighting gives the toy example values", {
 test_that("weighting weights each sample independently", {
   # weighting all samples at once gives the same as one sample at a time
   counts <- cbind(c(10, 0, 4), c(1, 2, 3), c(0, 0, 7))
-  sim <- matrix(c(1, 6/7, 0.5,
-                  6/7, 1, 0.5,
+  sim <- matrix(c(1, 6 / 7, 0.5,
+                  6 / 7, 1, 0.5,
                   0.5, 0.5, 1), nrow = 3)
   result <- weight_group(counts, sim, threshold = 0.8)
   for (s in seq_len(ncol(counts))) {
@@ -108,8 +108,8 @@ test_that("weighting counts pairs exactly at the threshold as neighbours", {
 
 test_that("weighting warns and sets the diagonal to 1 if it is not 1", {
   counts <- cbind(c(10, 0, 4))
-  sim <- matrix(c(1, 6/7, 0.5,
-                  6/7, 1, 0.5,
+  sim <- matrix(c(1, 6 / 7, 0.5,
+                  6 / 7, 1, 0.5,
                   0.5, 0.5, 1), nrow = 3)
   sim0 <- sim
   diag(sim0) <- 0

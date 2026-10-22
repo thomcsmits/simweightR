@@ -2,7 +2,7 @@
 % Please edit documentation in R/simweight.R
 \name{simweight}
 \alias{simweight}
-\title{Prepare and weight counts in one call}
+\title{Similarity based weighting of counts data}
 \usage{
 simweight(
   df,
@@ -18,16 +18,18 @@ simweight(
 )
 }
 \arguments{
-\item{df}{AIRR formatted data frame, see prepare_counts()}
+\item{df}{AIRR formatted data frame with one row per sequence}
 
 \item{threshold}{Minimum similarity for two sequences to be neighbours,
 between 0 and 1}
 
 \item{method}{Similarity method: "hamming" (default), "blosum", or a
-function, see weight_counts()}
+function that takes a character vector of CDR3 sequences of one group
+(all the same length) and returns their n x n similarity matrix, with
+values between 0 and 1, in the same order}
 
-\item{nthread}{Number of threads for stringdist, see hamming_similarity();
-only used by method "hamming"}
+\item{nthread}{Number of threads used by stringdist; only used by method
+"hamming"}
 
 \item{n_cores}{Number of V/J/length groups processed in parallel, with
 parallel::mclapply(). Not available on Windows: there it falls back to 1
@@ -49,10 +51,24 @@ not shown.}
 "duplicate_count" or "umi_count"}
 }
 \value{
-List with counts, sequences and weighted, see weight_counts()
+List with
+\itemize{
+\item sequences: data frame with id, cdr3_aa, v_call and j_call, one row per
+sequence
+\item counts: matrix of counts, one row per sequence (rownames "V_CDR3_J") and
+one column per sample, in the same order as the rows of sequences
+\item weighted: matrix of similarity-weighted counts, same dimensions and row
+order as counts
+}
 }
 \description{
-Runs prepare_counts() and weight_counts(). Filtering is not included yet
-(whether to filter before or after weighting is still open); call
-filter_counts() on the result.
+simweight prepares and weights counts in one call
+}
+\details{
+Runs \code{\link[=prepare_counts]{prepare_counts()}} and \code{\link[=weight_counts]{weight_counts()}}
+}
+\seealso{
+\code{\link[=prepare_counts]{prepare_counts()}} and \code{\link[=weight_counts]{weight_counts()}} to run the two steps
+separately, e.g. to try several thresholds without repeating the
+preparation.
 }

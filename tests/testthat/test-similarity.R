@@ -111,7 +111,7 @@ blosum_reference <- function(sequences) {
   sim <- matrix(0, n, n)
   for (i in seq_len(n)) {
     for (j in seq_len(n)) {
-      d <- blosum62_distance[cbind(chars[[i]], chars[[j]])]
+      d <- simweightR::blosum62_distance[cbind(chars[[i]], chars[[j]])]
       sim[i, j] <- 1 - sum(d) / length(chars[[i]])
     }
   }

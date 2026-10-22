@@ -1,16 +1,18 @@
-#' Prepare and weight counts in one call
+#' Similarity based weighting of counts data
 #'
-#' Runs prepare_counts() and weight_counts(). Filtering is not included yet
-#' (whether to filter before or after weighting is still open); call
-#' filter_counts() on the result.
+#' simweight prepares and weights counts in one call
 #'
-#' @param df AIRR formatted data frame, see prepare_counts()
+#' Runs [prepare_counts()] and [weight_counts()]
+#'
+#' @param df AIRR formatted data frame with one row per sequence
 #' @param threshold Minimum similarity for two sequences to be neighbours,
 #'   between 0 and 1
 #' @param method Similarity method: "hamming" (default), "blosum", or a
-#'   function, see weight_counts()
-#' @param nthread Number of threads for stringdist, see hamming_similarity();
-#'   only used by method "hamming"
+#'   function that takes a character vector of CDR3 sequences of one group
+#'   (all the same length) and returns their n x n similarity matrix, with
+#'   values between 0 and 1, in the same order
+#' @param nthread Number of threads used by stringdist; only used by method
+#'   "hamming"
 #' @param n_cores Number of V/J/length groups processed in parallel, with
 #'   parallel::mclapply(). Not available on Windows: there it falls back to 1
 #'   with a warning. The total number of threads is n_cores x nthread; on a busy
@@ -25,7 +27,19 @@
 #' @param count Column with the counts, e.g. "consensus_count",
 #'   "duplicate_count" or "umi_count"
 #'
-#' @returns List with counts, sequences and weighted, see weight_counts()
+#' @returns List with
+#'   * sequences: data frame with id, cdr3_aa, v_call and j_call, one row per
+#'     sequence
+#'
+#'   * counts: matrix of counts, one row per sequence (rownames "V_CDR3_J") and
+#'     one column per sample, in the same order as the rows of sequences
+#'
+#'   * weighted: matrix of similarity-weighted counts, same dimensions and row
+#'     order as counts
+#'
+#' @seealso [prepare_counts()] and [weight_counts()] to run the two steps
+#'   separately, e.g. to try several thresholds without repeating the
+#'   preparation.
 #'
 #' @export
 simweight <- function(df,
@@ -38,7 +52,9 @@ simweight <- function(df,
                       j = "j_call",
                       sample = "sample_processing_id",
                       count = "consensus_count") {
-  x <- prepare_counts(df, cdr3 = cdr3, v = v, j = j, sample = sample, count = count)
-  x <- weight_counts(x, threshold = threshold, method = method, nthread = nthread, n_cores = n_cores)
+  x <- prepare_counts(df, cdr3 = cdr3, v = v, j = j, sample = sample,
+                      count = count)
+  x <- weight_counts(x, threshold = threshold, method = method,
+                     nthread = nthread, n_cores = n_cores)
   x
 }

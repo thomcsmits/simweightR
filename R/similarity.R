@@ -39,7 +39,8 @@ hamming_similarity <- function(sequences, nthread = 1) {
 #' @returns BLOSUM similarity in matrix of pairwise similarities (diagonal=1)
 #'
 #' @noRd
-blosum_similarity <- function(sequences, distance = simweightR::blosum62_distance) {
+blosum_similarity <- function(sequences,
+                              distance = simweightR::blosum62_distance) {
   # check whether data is appropriate
   if (!is.character(sequences)) {
     stop("sequences must be a character vector, e.g. vj_data$cdr3_aa.")
@@ -49,7 +50,8 @@ blosum_similarity <- function(sequences, distance = simweightR::blosum62_distanc
     stop("All amino acid sequences must have same length to calculate similarity.")
   }
 
-  # amino acid at each position as row number in distance: one row per sequence, one column per position
+  # amino acid at each position as row number in distance: one row per
+  # sequence, one column per position
   n_char <- nchar(sequences[1])
   aa <- matrix(match(unlist(strsplit(sequences, "")), rownames(distance)),
                nrow = length(sequences), byrow = TRUE)
